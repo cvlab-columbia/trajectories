@@ -1,0 +1,6 @@
+defaults:
+  - dataset_defaults
+dataset_name: Diving48
+dataset_params: # Overwrite parameters in dataset_defaults
+  path: /path/to/datasets/Diving48
+

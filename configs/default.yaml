@@ -1,0 +1,11 @@
+defaults:
+  - checkpoint: after_each_epoch
+  - dataset: my_dataset
+  - model: default_model
+  - wandb: wandb
+  - trainer: all_gpus
+  - resume: resume_defaults
+  - override hydra/job_logging: stdout
+seed: 42
+verbose: True
+

@@ -1,0 +1,13 @@
+zero_wd_1d_param: False
+base_lr_scale_num_shards: True
+base_lr: ${str_to_float:0.0005*${dataset.dataloader_params.batch_size}/512}
+cosine_after_warmup: True
+cosine_end_lr: 1e-6
+warmup_start_lr: 0.0001
+warmup_epochs: 1000  # This is the number of training steps, not epochs
+lr_policy: cosine
+max_epoch: 2000  # This is the number of training steps, not epochs. It is T/2
+weight_decay: 0.05
+optimizing_method: adamw
+grad_clip_val: 0
+grad_clip_strategy: value

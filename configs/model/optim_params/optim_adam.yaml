@@ -1,0 +1,15 @@
+zero_wd_1d_param: False
+base_lr_scale_num_shards: True
+base_lr: 0.0001
+cosine_after_warmup: False
+cosine_end_lr: 1e-6
+warmup_start_lr: 1e-6
+warmup_epochs: 0.0
+lr_policy: steps_with_relative_lrs
+steps: [ ]
+lrs: [ 1. ]
+max_epoch: 200
+weight_decay: 0.05
+optimizing_method: adam
+
+

@@ -1,0 +1,6 @@
+save_top_k: 3
+every_n_epochs: 1
+save_last: True
+monitor: validate/loss
+filename: 'epoch={epoch}-val_loss={validate/loss:.5f}'
+auto_insert_metric_name: False

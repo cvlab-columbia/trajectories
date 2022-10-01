@@ -1,0 +1,6 @@
+defaults:
+  - optim_params: optim_deit
+  - loss_params: loss_defaults
+name: null
+predict_mode: null
+id_model: ${resume.id}

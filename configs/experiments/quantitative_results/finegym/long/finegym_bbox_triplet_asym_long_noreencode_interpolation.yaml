@@ -1,0 +1,67 @@
+# @package _global_
+defaults:
+  - override /dataset: finegym
+  - override /trainer: single_gpu
+dataset:
+  dataloader_params:
+    batch_size: 256
+    num_workers: 6
+    persistent_workers: True
+  dataset_params:
+    max_steps: 30
+    min_steps_past: 8
+    min_steps_future: 8
+    predict_interpolate: True
+    uniform_interpolate: True
+checkpoint:
+  save_top_k: 3
+trainer:
+  gpus: 1
+  plugins: null
+model:
+  name: TrajectoryModel
+  time_encoder_strategy: 'fourier'
+  time_decoder_strategy: 'fourier'
+  latent_distribution: 'bbox'
+  point_trajectory: False
+  num_sample_points: 10
+  distance_type: 'prediction'
+  hidden_size: 512
+  feature_size: 512
+  encoder_params:
+    name: TransformerEncoder
+    num_layers: 2
+    nhead: 2
+    in_size: 50  # Size of the points (25*2)
+    return_cls: True
+  decoder_params:
+    name: ResnetFC
+    in_size: 1
+    out_size: 50  # Size of the points (25*2)
+    n_blocks: 4
+  loss_params:
+    dict_losses:
+      trajectory_loss:
+        λ: 1
+        params:
+          loss_type: triplet
+          margin: 1.
+      reconstruction_loss:
+        λ: 1
+        params:
+          distance_fn_name: 'euclidean_l2_keypoints'
+          loss_type: 'regression'
+  generate_extrapolation: True
+  reconstruct_intersection: True
+  reencode: False
+  use_all: False
+  symmetric_dist: False
+  metrics_use: 'interpolation'
+setting: test
+wandb:
+  name: finegym_bbox_triplet_asym_long_noreencode
+resume:
+  id: 1ldqsyvl
+  load_model: True
+  epoch: best
+  check_config: False

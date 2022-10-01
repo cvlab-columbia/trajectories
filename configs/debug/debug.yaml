@@ -1,0 +1,12 @@
+# @package _global_
+dataset:
+  dataloader_params:
+    num_workers: 0
+    persistent_workers: false
+    batch_size: 4
+trainer:
+  gpus: 1
+  accelerator: null
+  plugins: null
+wandb:
+  group: debug

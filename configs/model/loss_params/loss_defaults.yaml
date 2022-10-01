@@ -1,0 +1,4 @@
+# Every loss with the parameters associated to that loss
+dict_losses:
+# General params for all losses
+similarity_fn: cosine

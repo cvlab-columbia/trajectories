@@ -1,0 +1,8 @@
+group: sandbox
+project: transport_prediction
+entity: your_wandb_username
+offline: false
+save_dir: /path/to/logs
+name: my_experiment
+id: ${if:${resume.load_all},${resume.id}}
+save: True

@@ -1,0 +1,5 @@
+defaults:
+  - dataset_defaults
+dataset_name: FisV
+dataset_params: # Overwrite parameters in dataset_defaults
+  path: /path/to/datasets/FisV-figure-skating

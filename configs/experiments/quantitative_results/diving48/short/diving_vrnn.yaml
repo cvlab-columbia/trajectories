@@ -1,0 +1,50 @@
+# @package _global_
+defaults:
+  - override /dataset: diving48
+  - override /trainer: single_gpu
+dataset:
+  dataloader_params:
+    batch_size: 128
+    num_workers: 6
+    persistent_workers: True
+  dataset_params:
+    max_steps: 10
+    min_steps_past: 3
+    min_steps_future: 3
+checkpoint:
+  save_top_k: 3
+trainer:
+  gpus: 1
+  plugins: null
+model:
+  name: VRNNModel
+  num_sample_points: 10
+  hidden_size: 512
+  feature_size: 512
+  latent_distribution: 'gaussian'
+  encoder_params:
+    name: EncoderVRNN
+    num_layers: 2
+    in_size: 50  # Size of the points (25*2)
+  decoder_params:
+    name: ResnetFC
+    out_size: 50  # Size of the points (25*2)
+    n_blocks: 4
+  loss_params:
+    dict_losses:
+      kld_loss:
+        λ: 0.1
+        params:
+      reconstruction_loss:
+        λ: 1
+        params:
+          distance_fn_name: 'euclidean_l2_keypoints'
+          loss_type: 'regression'
+setting: test
+wandb:
+  name: diving48_vrnn_kl01
+resume:
+  id: 3w3cq80w
+  load_model: True
+  epoch: best
+  check_config: False

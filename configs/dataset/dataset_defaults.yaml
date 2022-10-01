@@ -1,0 +1,12 @@
+dataset_name:                                         # Name of the dataset class
+dataset_params:
+  path:                                               # Path of the dataset
+  num_classes:
+  seed: ${seed}
+dataloader_params:
+  num_workers: 8
+  pin_memory: true
+  prefetch_factor: 2
+  persistent_workers: true                            # This maintains workers alive across epochs
+  batch_size: 16
+split_use: null                                       # e.g. val or test. Used for evaluation

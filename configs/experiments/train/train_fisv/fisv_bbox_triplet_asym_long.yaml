@@ -1,0 +1,70 @@
+# @package _global_
+defaults:
+  - override /dataset: fisv
+  - override /model/optim_params: optim_deit
+  - override /model/loss_params: loss_defaults
+dataset:
+  dataloader_params:
+    batch_size: 100
+    num_workers: 8
+    persistent_workers: True
+  dataset_params:
+    max_steps: 30
+    min_steps_past: 8
+    min_steps_future: 8
+checkpoint:
+  save_top_k: 3
+trainer:
+  gpus: 4
+  plugins: null
+  max_epochs: 10000
+model:
+  name: TrajectoryModel
+  time_encoder_strategy: 'fourier'
+  time_decoder_strategy: 'fourier'
+  latent_distribution: 'bbox'
+  point_trajectory: False
+  num_sample_points: 3
+  distance_type: 'prediction'
+  hidden_size: 512
+  feature_size: 512
+  option_reencode: 2
+  encoder_params:
+    name: TransformerEncoder
+    num_layers: 2
+    nhead: 2
+    in_size: 50  # Size of the points (25*2)
+    return_cls: True
+  decoder_params:
+    name: ResnetFC
+    in_size: 1
+    out_size: 50  # Size of the points (25*2)
+    n_blocks: 4
+  loss_params:
+    dict_losses:
+      trajectory_loss:
+        λ: 1
+        params:
+          loss_type: triplet
+          margin: 1.
+      reconstruction_loss:
+        λ: 1
+        params:
+          distance_fn_name: 'euclidean_l2_keypoints'
+          loss_type: 'regression'
+  generate_extrapolation: True
+  reconstruct_intersection: True
+  reencode: True
+  use_all: True
+  symmetric_dist: False
+  optim_params:
+    base_lr: 0.00001
+    warmup_epochs: 1000
+    max_epoch: 2000  # This is the number of training steps, not epochs
+    warmup_start_lr: 0.000001
+    grad_clip_val: 0.01
+    grad_clip_strategy: 'norm'
+setting: train
+wandb:
+  name: fisv_bbox_triplet_asym_long
+

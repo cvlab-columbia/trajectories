@@ -1,0 +1,58 @@
+# @package _global_
+defaults:
+  - override /dataset: finegym
+  - override /trainer: single_gpu
+dataset:
+  dataloader_params:
+    batch_size: 128
+    num_workers: 6
+    persistent_workers: True
+  dataset_params:
+    max_steps: 30
+    min_steps_past: 8
+    min_steps_future: 8
+    invert_time_rnn: True
+checkpoint:
+  save_top_k: 3
+trainer:
+  gpus: 1
+  plugins: null
+model:
+  name: VRNNModel
+  sample_mode: True  # Only in an inference setting
+  num_sample_points: 10
+  hidden_size: 512
+  feature_size: 25
+  trajectron: True
+  latent_distribution: 'categorical'
+  encoder_params:
+    name: EncoderTrajectron
+    num_layers: 2
+    in_size: 50  # Size of the points (25*2)
+  decoder_params:
+    name: TrajectronDecoder
+    out_size: 50  # Size of the points (25*2)
+    n_blocks: 4
+  loss_params: # InfoVAE formulation
+    dict_losses:
+      kld_loss:
+        λ: 1
+        params:
+      reconstruction_loss:
+        λ: 1
+        params:
+          distance_fn_name: 'euclidean_l2_keypoints'
+          loss_type: 'regression'
+      info_loss:
+        λ: 1
+        params:
+          info_prior: True
+setting: test
+wandb:
+  name: finegym_trajectron_long
+  save: False
+resume:
+  id: 1szx5yxp
+  load_model: True
+  epoch: best
+  check_config: False

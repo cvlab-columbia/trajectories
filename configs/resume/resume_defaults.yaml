@@ -1,0 +1,9 @@
+id: null
+path: null
+epoch: null
+load_all: false
+load_state: false
+load_model: false
+load_any: ${any:${.load_all},${.load_state},${.load_model}}
+dir_checkpoint: ${wandb.project}
+check_config: True
