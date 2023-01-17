@@ -5,7 +5,6 @@ from typing import Any
 
 import omegaconf
 import torch.utils.data
-from data.human_keypoints import *
 from pytorch_lightning import LightningDataModule
 from pytorch_lightning.trainer.states import TrainerFn
 from torch.utils.data import DataLoader
